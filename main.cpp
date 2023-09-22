@@ -6,24 +6,50 @@
 
 #include <iostream>
 
+////////////////////////////////////////////////////////////////////////////////
+//                     "traditional" implementation
+////////////////////////////////////////////////////////////////////////////////
+
 class IBase {
 public:
-  void foo() const { foo_impl(); }
+  virtual void foo() const = 0;
   virtual ~IBase() = default;
-
-private:
-  virtual void foo_impl() const = 0;
 };
 
 class DerivedA : public IBase {
 private:
-  void foo_impl() const override { std::cout << "foo in DerivedA\n"; }
+  void foo() const override { std::cout << "foo in DerivedA\n"; }
 };
 
 class DerivedB : public IBase {
 private:
-  void foo_impl() const override { std::cout << "foo in DerivedB\n"; }
+  void foo() const override { std::cout << "foo in DerivedB\n"; }
 };
+
+////////////////////////////////////////////////////////////////////////////////
+//                          NVI implementation
+////////////////////////////////////////////////////////////////////////////////
+
+// class IBase {
+// public:
+//   void foo() const { foo_impl(); }
+//   virtual ~IBase() = default;
+
+// private:
+//   virtual void foo_impl() const = 0;
+// };
+
+// class DerivedA : public IBase {
+// private:
+//   void foo_impl() const override { std::cout << "foo in DerivedA\n"; }
+// };
+
+// class DerivedB : public IBase {
+// private:
+//   void foo_impl() const override { std::cout << "foo in DerivedB\n"; }
+// };
+
+////////////////////////////////////////////////////////////////////////////////
 
 void bar(const IBase &base) { base.foo(); }
 
